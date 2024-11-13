@@ -1,6 +1,111 @@
 // mã hóa Casear
 // #include <iostream>
 // #include <string>
+#include"Caesar_Encrypt.h"
+#include"Rail_Fence_Encrypt.h"
+#include"Caesar_Rail_Fence_Encrypt.h"
+#include"Caesar_Decrypt.h"
+#include <iostream>
+#include <fstream>
+#include <unordered_set>
+#include <string>
+#include <sstream> // Thư viện cho istringstream
+#include <algorithm> // Thư viện cho remove_if và transform
+#include <cctype> // Thư viện cho ispunct và tolower
+
+// Hàm đọc từ điển từ file vào unordered_set
+
+std::unordered_set<std::string> loadDictionary(const std::string& dictionaryFile) {
+    std::unordered_set<std::string> dictionary;
+    std::ifstream file(dictionaryFile);
+    std::string word;
+    while (file >> word) {
+        dictionary.insert(word);
+    }
+    return dictionary;
+}
+
+// Hàm kiểm tra số lượng chuỗi con hợp lệ trong bản rõ
+int countValidWords(const std::string& text, const std::unordered_set<std::string>& dictionary) {
+    int validWords = 0;
+    int length = text.length();
+
+    // Kiểm tra tất cả các chuỗi con
+    for (int start = 0; start < length; ++start) {
+        for (int len = 1; len <= length - start; ++len) {
+            std::string subStr = text.substr(start, len);
+
+            // Chuyển chuỗi con về chữ thường
+            std::transform(subStr.begin(), subStr.end(), subStr.begin(), ::tolower);
+
+            // Kiểm tra nếu chuỗi con có trong từ điển
+            if (dictionary.find(subStr) != dictionary.end()) {
+                ++validWords;
+            }
+        }
+    }
+    return validWords;
+}
+
+// Hàm giải mã Caesar cho một ký tự
+char caesarDecryptChar(char c, int key) {
+    if (c >= 'A' && c <= 'Z') {
+        return (c - 'A' - key + 26) % 26 + 'A';
+    } else if (c >= 'a' && c <= 'z') {
+        return (c - 'a' - key + 26) % 26 + 'a';
+    } else {
+        return c;
+    }
+}
+
+// Hàm giải mã Caesar cho chuỗi
+std::string caesarDecrypt(const std::string& encryptedText, int key) {
+    std::string decryptedText;
+    for (char c : encryptedText) {
+        decryptedText += caesarDecryptChar(c, key);
+    }
+    return decryptedText;
+}
+
+// Hàm thử tất cả các khóa và kiểm tra bản rõ
+void bruteForceCaesarDecrypt(const std::string& encryptedText, const std::unordered_set<std::string>& dictionary) {
+    std::cout << "Thử tất cả các khóa (0-25):" << std::endl;
+    int bestKey = 0;
+    int maxValidWords = 0;
+    std::string bestDecryptedText;
+
+    for (int key = 0; key < 26; ++key) {
+        std::string decryptedText = caesarDecrypt(encryptedText, key);
+        int validWords = countValidWords(decryptedText, dictionary);
+        
+        std::cout << "Khóa " << key << ": " << decryptedText << " (Từ hợp lệ: " << validWords << ")" << std::endl;
+
+        // Lưu bản rõ với số từ hợp lệ cao nhất
+        if (validWords > maxValidWords) {
+            maxValidWords = validWords;
+            bestKey = key;
+            bestDecryptedText = decryptedText;
+        }
+    }
+
+    std::cout << "\nBản rõ có khả năng đúng nhất với khóa " << bestKey << ": " << bestDecryptedText << std::endl;
+}
+
+int main() {
+    std::string encryptedText;
+    std::cout << "Nhập bản mã Caesar: ";
+    std::getline(std::cin, encryptedText);
+
+    // Tải từ điển
+    std::unordered_set<std::string> dictionary = loadDictionary("words_alpha.txt");
+
+    // Giải mã Caesar với phương pháp thử khóa và kiểm tra từ điển
+    bruteForceCaesarDecrypt(encryptedText, dictionary);
+
+    return 0;
+}
+
+
 
 // // Hàm mã hóa Caesar cho ký tự ASCII
 // char caesarChar(char c, int key) {
@@ -32,7 +137,7 @@
 //     std::string plainText;
 //     int key;
 
-//     std::cout << "Nhập bản rõ: ";
+//     cout << "Nhập bản rõ: ";
 //     std::getline(std::cin, plainText);
 
 //     std::cout << "Nhập khóa (số nguyên): ";
