@@ -1,0 +1,4 @@
+#ifndef CAESAR_RAIL_FENCE_DECRYPT_H
+#define CAESAR_RAIL_FENCE_DECRY
+
+#endif
