@@ -557,7 +557,7 @@ int main() {
     std::getline(std::cin, encryptedText);
 
     // Tải từ điển
-    std::unordered_set<std::string> dictionary = loadDictionary("Src/words_alpha.txt");
+    std::unordered_set<std::string> dictionary = loadDictionary("Src/dictionary.txt");
 
     // Giải mã Caesar với OpenMP
     bruteForceCaesarDecrypt(encryptedText, dictionary);

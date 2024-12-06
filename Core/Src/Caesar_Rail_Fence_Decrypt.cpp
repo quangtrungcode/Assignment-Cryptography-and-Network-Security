@@ -891,7 +891,7 @@ std::string decryptProductCipher(const std::string& encryptedText, const std::un
 int main() {
     // Đọc từ điển
          auto programStart = std::chrono::high_resolution_clock::now();
-    std::unordered_set<std::string> dictionary = loadDictionary("Src/vocabulary.txt");
+  //  std::unordered_set<std::string> dictionary = loadDictionary("Src/dictionary.txt");
 
     // Bản mã (có thể thay đổi tùy theo bài toán)
     std::string encryptedText;
@@ -899,7 +899,7 @@ int main() {
     // Yêu cầu người dùng nhập bản mã từ bàn phím
     std::cout << "Nhập bản mã: ";
     std::getline(std::cin, encryptedText);
-
+    std::unordered_set<std::string> dictionary = loadDictionary("Src/dictionary.txt");
     // Giải mã bản mã theo quy trình Rail Fence + Caesar Cipher
     std::string decryptedText = decryptProductCipher(encryptedText, dictionary);
 
