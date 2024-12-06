@@ -11,9 +11,13 @@
 #include <omp.h>
 
 // Tải từ điển từ file
-std::unordered_set<std::string> loadDictionary(const std::string& dictionaryFile) {
+std::unordered_set<std::string> loadDictionary1(const std::string& dictionaryFile) {
     std::unordered_set<std::string> dictionary;
     std::ifstream file(dictionaryFile);
+    if (!file) {
+        std::cerr << "Error opening file: " << dictionaryFile << std::endl;
+        return dictionary;
+    }
     std::string word;
     while (file >> word) {
         std::transform(word.begin(), word.end(), word.begin(), ::tolower);
@@ -23,7 +27,7 @@ std::unordered_set<std::string> loadDictionary(const std::string& dictionaryFile
 }
 
 
-std::string caesarDecrypt(const std::string& text, int shift) {
+std::string caesarDecrypt1(const std::string& text, int shift) {
     std::string decryptedText = text;
    
     for (char& c : decryptedText) {
@@ -37,7 +41,7 @@ std::string caesarDecrypt(const std::string& text, int shift) {
 
 
 
-int findValidWords(const std::string& text, const std::unordered_set<std::string>& dictionary) {
+int findValidWords1(const std::string& text, const std::unordered_set<std::string>& dictionary) {
     int count = 0;
     std::string lowerText = text;
     std::transform(lowerText.begin(), lowerText.end(), lowerText.begin(), ::tolower);
@@ -73,8 +77,8 @@ int bestKeyGlobal = 0;
 void bruteForceCaesarDecrypt(const std::string& encryptedText, const std::unordered_set<std::string>& dictionary) {
     #pragma omp parallel for
     for (int key = 0; key < 26; ++key) {
-        std::string decryptedText = caesarDecrypt(encryptedText, key);
-        int validWords = findValidWords(decryptedText, dictionary);
+        std::string decryptedText = caesarDecrypt1(encryptedText, key);
+        int validWords = findValidWords1(decryptedText, dictionary);
 
         
         #pragma omp critical
@@ -91,27 +95,27 @@ void bruteForceCaesarDecrypt(const std::string& encryptedText, const std::unorde
     }
 }
 
-int main() {
-    auto programStart = std::chrono::high_resolution_clock::now();
+// int main() {
+//     auto programStart = std::chrono::high_resolution_clock::now();
 
-    std::string encryptedText;
-    std::cout << "Nhập bản mã Caesar: ";
-    std::getline(std::cin, encryptedText);
-
-    
-    std::unordered_set<std::string> dictionary = loadDictionary("Src/dictionary.txt");
+//     std::string encryptedText;
+//     std::cout << "Nhập bản mã Caesar: ";
+//     std::getline(std::cin, encryptedText);
 
     
-    bruteForceCaesarDecrypt(encryptedText, dictionary);
+//     std::unordered_set<std::string> dictionary = loadDictionary("Src/dictionary.txt");
 
     
-    std::cout << "\nBản rõ có khả năng đúng nhất với khóa " << bestKeyGlobal << ": " << bestDecryptedTextGlobal << std::endl;
+//     bruteForceCaesarDecrypt(encryptedText, dictionary);
 
-    auto programEnd = std::chrono::high_resolution_clock::now();
-    auto programDuration = std::chrono::duration_cast<std::chrono::milliseconds>(programEnd - programStart);
+    
+//     std::cout << "\nBản rõ có khả năng đúng nhất với khóa " << bestKeyGlobal << ": " << bestDecryptedTextGlobal << std::endl;
 
-    std::cout << "\nThời gian thực thi toàn bộ chương trình: " << programDuration.count() << " ms\n";
-    return 0;
-}
+//     auto programEnd = std::chrono::high_resolution_clock::now();
+//     auto programDuration = std::chrono::duration_cast<std::chrono::milliseconds>(programEnd - programStart);
+
+//     std::cout << "\nThời gian thực thi toàn bộ chương trình: " << programDuration.count() << " ms\n";
+//     return 0;
+// }
 
 

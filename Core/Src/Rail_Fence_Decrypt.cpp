@@ -11,7 +11,7 @@
 #include <cctype>
 #include <omp.h>
 #include <chrono> 
-std::unordered_set<std::string> loadDictionary(const std::string& dictionaryFile) {
+std::unordered_set<std::string> loadDictionary2(const std::string& dictionaryFile) {
     std::unordered_set<std::string> dictionary;
     std::ifstream file(dictionaryFile);
     std::string word;
@@ -24,7 +24,7 @@ std::unordered_set<std::string> loadDictionary(const std::string& dictionaryFile
 
 
 
-int findValidWords(const std::string& text, const std::unordered_set<std::string>& dictionary) {
+int findValidWords2(const std::string& text, const std::unordered_set<std::string>& dictionary) {
     int count = 0;
     std::string lowerText = text;
     std::transform(lowerText.begin(), lowerText.end(), lowerText.begin(), ::tolower);
@@ -54,7 +54,7 @@ int findValidWords(const std::string& text, const std::unordered_set<std::string
 
 
 
-std::string railFenceDecrypt(const std::string& encryptedText, int numRails) {
+std::string railFenceDecrypt1(const std::string& encryptedText, int numRails) {
     int len = encryptedText.length();
     std::vector<int> railPattern(len, -1);
     std::vector<std::string> rails(numRails); 
@@ -100,8 +100,8 @@ void findBestDecryption(const std::string& encryptedText, const std::unordered_s
 
     #pragma omp parallel for
     for (int numRails = startRail; numRails <= endRail; ++numRails) {
-        std::string decryptedText = railFenceDecrypt(encryptedText, numRails);
-        int validWords = findValidWords(decryptedText, dictionary);
+        std::string decryptedText = railFenceDecrypt1(encryptedText, numRails);
+        int validWords = findValidWords2(decryptedText, dictionary);
 
         
         #pragma omp critical
@@ -125,29 +125,29 @@ void findBestDecryption(const std::string& encryptedText, const std::unordered_s
     omp_destroy_lock(&lock);
 }
 
-int main() {
-    auto programStart = std::chrono::high_resolution_clock::now();
-    std::string encryptedText;
-    std::cout << "Nhập bản mã Rail Fence: ";
-    std::getline(std::cin, encryptedText);
+// int main() {
+//     auto programStart = std::chrono::high_resolution_clock::now();
+//     std::string encryptedText;
+//     std::cout << "Nhập bản mã Rail Fence: ";
+//     std::getline(std::cin, encryptedText);
 
-    std::unordered_set<std::string> dictionary = loadDictionary("Src/dictionary.txt");
+//     std::unordered_set<std::string> dictionary = loadDictionary("Src/dictionary.txt");
 
-    int maxRails = encryptedText.length();
-    int maxValidWords = 0;
-    std::vector<std::pair<int, std::string>> bestDecryptedTexts;
+//     int maxRails = encryptedText.length();
+//     int maxValidWords = 0;
+//     std::vector<std::pair<int, std::string>> bestDecryptedTexts;
     
-    findBestDecryption(encryptedText, dictionary, 2, maxRails, maxValidWords, bestDecryptedTexts);
+//     findBestDecryption(encryptedText, dictionary, 2, maxRails, maxValidWords, bestDecryptedTexts);
     
-    std::cout << "\nCác bản rõ có số từ hợp lệ cao nhất (" << maxValidWords << " từ hợp lệ):\n";
-    for (const auto& result : bestDecryptedTexts) {
-        std::cout << "Sử dụng " << result.first << " dòng: " << result.second << std::endl;
-    }
+//     std::cout << "\nCác bản rõ có số từ hợp lệ cao nhất (" << maxValidWords << " từ hợp lệ):\n";
+//     for (const auto& result : bestDecryptedTexts) {
+//         std::cout << "Sử dụng " << result.first << " dòng: " << result.second << std::endl;
+//     }
 
-    auto programEnd = std::chrono::high_resolution_clock::now();
-    auto programDuration = std::chrono::duration_cast<std::chrono::milliseconds>(programEnd - programStart);
+//     auto programEnd = std::chrono::high_resolution_clock::now();
+//     auto programDuration = std::chrono::duration_cast<std::chrono::milliseconds>(programEnd - programStart);
 
-    std::cout << "\nThời gian thực thi toàn bộ chương trình: " << programDuration.count() << " ms\n";
-    return 0;
-}
+//     std::cout << "\nThời gian thực thi toàn bộ chương trình: " << programDuration.count() << " ms\n";
+//     return 0;
+// }
 

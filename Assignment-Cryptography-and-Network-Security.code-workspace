@@ -59,7 +59,16 @@
 			"streambuf": "cpp",
 			"thread": "cpp",
 			"typeinfo": "cpp",
-			"chrono": "cpp"
+			"chrono": "cpp",
+			"cstring": "cpp",
+			"list": "cpp",
+			"unordered_set": "cpp",
+			"optional": "cpp",
+			"fstream": "cpp",
+			"future": "cpp",
+			"ranges": "cpp",
+			"span": "cpp",
+			"sstream": "cpp"
 		}
 	}
 }

@@ -9,7 +9,7 @@
 #include <algorithm>
 #include<vector>
 using namespace std;
-char caesarChar(char c, int key);
-std::string caesarEncrypt(const std::string& plainText, int key);
+char caesarChar1(char c, int key);
+std::string caesarEncrypt1(const std::string& plainText, int key);
 
 #endif

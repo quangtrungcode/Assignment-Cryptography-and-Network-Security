@@ -1,5 +1,5 @@
 #include"Rail_Fence_Encrypt.h"
-std::string railFenceEncrypt(const std::string& plainText, int numRails) {
+std::string railFenceEncrypt1(const std::string& plainText, int numRails) {
     if (numRails == 1) return plainText;  
 
     std::vector<std::string> rails(numRails);
@@ -28,21 +28,21 @@ std::string railFenceEncrypt(const std::string& plainText, int numRails) {
 
     return encryptedText;
 }
-int main() {
-    std::string plainText;
-    int numRails;
+// int main() {
+//     std::string plainText;
+//     int numRails;
 
    
-    std::cout << "Nhập bản rõ: ";
-    std::getline(std::cin, plainText);
+//     std::cout << "Nhập bản rõ: ";
+//     std::getline(std::cin, plainText);
 
-    std::cout << "Nhập số dòng (rails): ";
-    std::cin >> numRails;
+//     std::cout << "Nhập số dòng (rails): ";
+//     std::cin >> numRails;
 
     
-    std::string encryptedText = railFenceEncrypt(plainText, numRails);
-    std::cout << "Bản mã sau khi mã hóa Rail Fence: " << encryptedText << std::endl;
+//     std::string encryptedText = railFenceEncrypt(plainText, numRails);
+//     std::cout << "Bản mã sau khi mã hóa Rail Fence: " << encryptedText << std::endl;
 
-    return 0;
-}
+//     return 0;
+// }
 

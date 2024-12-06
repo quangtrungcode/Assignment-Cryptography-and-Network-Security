@@ -148,29 +148,29 @@ std::string decryptProductCipher(const std::string& encryptedText, const std::un
     return bestDecryptedText;
 }
 
-int main() {
+// int main() {
     
-         auto programStart = std::chrono::high_resolution_clock::now();
+//          auto programStart = std::chrono::high_resolution_clock::now();
  
 
     
-    std::string encryptedText;
+//     std::string encryptedText;
     
     
-    std::cout << "Nhập bản mã: ";
-    std::getline(std::cin, encryptedText);
-    std::unordered_set<std::string> dictionary = loadDictionary("Src/dictionary.txt");
+//     std::cout << "Nhập bản mã: ";
+//     std::getline(std::cin, encryptedText);
+//     std::unordered_set<std::string> dictionary = loadDictionary("Src/dictionary.txt");
     
-    std::string decryptedText = decryptProductCipher(encryptedText, dictionary);
+//     std::string decryptedText = decryptProductCipher(encryptedText, dictionary);
 
    
-    std::cout << "Bản rõ sau khi giải mã: " << decryptedText << std::endl;
-    auto programEnd = std::chrono::high_resolution_clock::now();
-    auto programDuration = std::chrono::duration_cast<std::chrono::milliseconds>(programEnd - programStart);
+//     std::cout << "Bản rõ sau khi giải mã: " << decryptedText << std::endl;
+//     auto programEnd = std::chrono::high_resolution_clock::now();
+//     auto programDuration = std::chrono::duration_cast<std::chrono::milliseconds>(programEnd - programStart);
 
-    std::cout << "\nThời gian thực thi toàn bộ chương trình: " << programDuration.count() << " ms\n";
-    return 0;
-}
+//     std::cout << "\nThời gian thực thi toàn bộ chương trình: " << programDuration.count() << " ms\n";
+//     return 0;
+// }
 
 
 
