@@ -125,29 +125,5 @@ void findBestDecryption(const std::string& encryptedText, const std::unordered_s
     omp_destroy_lock(&lock);
 }
 
-// int main() {
-//     auto programStart = std::chrono::high_resolution_clock::now();
-//     std::string encryptedText;
-//     std::cout << "Nhập bản mã Rail Fence: ";
-//     std::getline(std::cin, encryptedText);
 
-//     std::unordered_set<std::string> dictionary = loadDictionary("Src/dictionary.txt");
-
-//     int maxRails = encryptedText.length();
-//     int maxValidWords = 0;
-//     std::vector<std::pair<int, std::string>> bestDecryptedTexts;
-    
-//     findBestDecryption(encryptedText, dictionary, 2, maxRails, maxValidWords, bestDecryptedTexts);
-    
-//     std::cout << "\nCác bản rõ có số từ hợp lệ cao nhất (" << maxValidWords << " từ hợp lệ):\n";
-//     for (const auto& result : bestDecryptedTexts) {
-//         std::cout << "Sử dụng " << result.first << " dòng: " << result.second << std::endl;
-//     }
-
-//     auto programEnd = std::chrono::high_resolution_clock::now();
-//     auto programDuration = std::chrono::duration_cast<std::chrono::milliseconds>(programEnd - programStart);
-
-//     std::cout << "\nThời gian thực thi toàn bộ chương trình: " << programDuration.count() << " ms\n";
-//     return 0;
-// }
 

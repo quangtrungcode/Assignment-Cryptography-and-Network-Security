@@ -23,19 +23,5 @@ std::string caesarEncrypt1(const std::string& plainText, int key) {
     return encryptedText;
 }
 
-// int main() {
-//     std::string plainText;
-//     int key;
 
-//     cout << "Nhập bản rõ: ";
-//     std::getline(std::cin, plainText);
-
-//     std::cout << "Nhập khóa (số nguyên): ";
-//     std::cin >> key;
-
-//     std::string encryptedText = caesarEncrypt(plainText, key);
-//     std::cout << "Bản mã sau khi mã hóa Caesar: " << encryptedText << std::endl;
-
-//     return 0;
-// }
 

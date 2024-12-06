@@ -46,27 +46,3 @@ std::string railFenceEncrypt(const std::string& plainText, int numRails) {
     return encryptedText;
 }
 
-// int main() {
-//     std::string plainText;
-//     int caesarKey, railKey;
-
-   
-//     std::cout << "Nhập bản rõ: ";
-//     std::getline(std::cin, plainText);
-
-//     std::cout << "Nhập khóa Caesar (số nguyên): ";
-//     std::cin >> caesarKey;
-
-//     std::cout << "Nhập số dòng Rail Fence: ";
-//     std::cin >> railKey;
-
-    
-//     std::string caesarEncrypted = caesarEncrypt(plainText, caesarKey);
-//     std::cout << "Bản mã sau khi mã hóa Caesar: " << caesarEncrypted << std::endl;
-
-   
-//     std::string railFenceEncrypted = railFenceEncrypt(caesarEncrypted, railKey);
-//     std::cout << "Bản mã cuối cùng sau khi mã hóa Rail Fence: " << railFenceEncrypted << std::endl;
-
-//     return 0;
-// }
