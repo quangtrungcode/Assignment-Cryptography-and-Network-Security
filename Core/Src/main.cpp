@@ -19,131 +19,339 @@ int main() {
     std::cout << "Enter your choice: ";
     std::cin >> choice;
 
-    if (choice==1) {
-         
-       
-        std::string plainText;
-        int key;
+ 
+    if (choice == 1) {
+    const std::string inputFileName = "Data/Caesar_plaintext.txt"; 
+    const std::string outputFileName = "Data/Caesar_ciphertext.txt"; 
 
-        
-        std::cout << "Nhập bản rõ: ";
-        std::cin.ignore(); 
-        std::getline(std::cin, plainText);
-
-        
-        std::cout << "Nhập khóa (số nguyên): ";
-        std::cin >> key;
-
-        
-        std::string encryptedText = caesarEncrypt1(plainText, key);
-        std::cout << "Bản mã sau khi mã hóa Caesar: " << encryptedText << std::endl;
+    std::string plainText;
+    std::string confirm;
+    int key;
+     cout<<"Hãy nhập bản rõ vào file Caesar_plaintext.txt"<<'\n';
+     cout<<"Nhập OK để xác nhận: ";
+     cin>>confirm;
+    while(confirm!="OK"){
+  
+        cout<<"Vui lòng nhập OK để xác nhận: ";
+        cin>>confirm;
+   
     }
-if(choice==2){
+   
+    std::ifstream inputFile(inputFileName);
+    if (!inputFile) {
+        std::cerr << "Không thể mở file: Caesar_plaintext.txt" << std::endl;
+        return 1;
+    }
+
+  
+    plainText.assign((std::istreambuf_iterator<char>(inputFile)),
+                     (std::istreambuf_iterator<char>()));
+    inputFile.close();
+    if (plainText.empty()) {
+        std::cout << "File bản rõ rỗng. Không có gì để mã hóa.\n";
+        return 1;
+    }
+    std::cout << "Bản rõ đã đọc thành công từ file: Caesar_plaintext.txt: " << '\n';
+   
+    std::cout << "Nhập khóa Caesar: ";
+    std::cin >> key;
+
+    std::string encryptedText = caesarEncrypt1(plainText, key);
+
+  
+    std::ofstream outputFile(outputFileName);
+    if (!outputFile) {
+        std::cerr << "Không thể tạo file: Caesar_ciphertext.txt" << std::endl;
+        return 1; 
+    }
+
+    outputFile << encryptedText; 
+    outputFile.close();
+
+    std::cout << "Bản mã đã ghi thành công vào file: Caesar_ciphertext.txt" << std::endl;
+   
+}
+
+if (choice == 2) {
     auto programStart = std::chrono::high_resolution_clock::now();
 
     std::string encryptedText;
-    std::cout << "Nhập bản mã Caesar: ";
-    std::cin.ignore();
-    std::getline(std::cin, encryptedText);
+    std::string confirm;
+    cout<<"Hãy nhập bản mã vào file Caesar_ciphertext.txt"<<'\n';
+    cout<<"Nhập OK để xác nhận: ";
+    cin>>confirm;
+    while(confirm!="OK"){
+ 
+        cout<<"Vui lòng nhập OK để xác nhận: ";
+        cin>>confirm;
+  
+    }
+    
+    std::ifstream inputFile("Data/Caesar_ciphertext.txt");
+    if (!inputFile) {
+        std::cerr << "Không thể mở file Caesar_ciphertext.txt để đọc bản mã!\n";
+        return 1;
+    }
+    std::getline(inputFile, encryptedText); 
+    inputFile.close();
+    if (encryptedText.empty()) {
+        std::cout << "File bản mã rỗng. Không có gì để giải mã.\n";
+        return 1;
+    }
+    std::cout << "Bản mã đã đọc thành công từ file: Caesar_ciphertext.txt: " << '\n';
 
     
-    std::unordered_set<std::string> dictionary = loadDictionary1("Src/dictionary.txt");
+    std::unordered_set<std::string> dictionary = loadDictionary1("Data/dictionary.txt");
 
-    
+   
     bruteForceCaesarDecrypt(encryptedText, dictionary);
 
-    
-    std::cout << "\nBản rõ có khả năng đúng nhất với khóa " << bestKeyGlobal << ": " << bestDecryptedTextGlobal << std::endl;
+   
+    std::ofstream outputFile("Data/Caesar_plaintext.txt");
+    if (!outputFile) {
+        std::cerr << "Không thể mở file Caesar_plaintext.txt để ghi bản rõ!\n";
+        return 1;
+    }
+ 
+    outputFile<<bestDecryptedTextGlobal << '\n';
+ 
+    outputFile.close();
 
+    std::cout << "\nBản rõ đã ghi thành công vào file: Caesar_plaintext.txt" << std::endl;
+    cout << "Khóa Caesar giải mã được:  " << bestKeyGlobal << '\n';
+    cout << "Số từ hợp lệ của bản rõ sau khi giải mã: "<<globalMaxValidWords << '\n';
+   
     auto programEnd = std::chrono::high_resolution_clock::now();
     auto programDuration = std::chrono::duration_cast<std::chrono::milliseconds>(programEnd - programStart);
 
     std::cout << "\nThời gian thực thi toàn bộ chương trình: " << programDuration.count() << " ms\n";
-
 }
-if(choice==3){
-   std::string plainText;
+
+
+if (choice == 3) {
+    std::string plainText;
     int numRails;
 
-   
-    std::cout << "Nhập bản rõ: ";
-    std::cin.ignore();
-    std::getline(std::cin, plainText);
+    
+    std::string confirm;
+    cout<<"Hãy nhập bản rõ vào file Rail_Fence_plaintext.txt"<<'\n';
+    cout<<"Nhập OK để xác nhận: ";
+    cin>>confirm;
+    while(confirm!="OK"){
+  
+        cout<<"Vui lòng nhập OK để xác nhận: ";
+        cin>>confirm;
+  
+    }
+    
+    std::ifstream inputFile("Data/Rail_Fence_plaintext.txt");
+    if (!inputFile) {
+        std::cerr << "Không thể mở file bản rõ Rail_Fence_plaintext.txt" << '\n';
+        return 1;
+    }
 
-    std::cout << "Nhập số dòng (rails): ";
+    std::getline(inputFile, plainText, '\0'); 
+    inputFile.close();
+
+    if (plainText.empty()) {
+        std::cout << "File bản rõ rỗng. Không có gì để mã hóa.\n";
+        return 1;
+    }
+    std::cout << "Bản rõ đã đọc thành công từ file: Rail_Fence_plaintext.txt" << '\n';
+    
+    std::cout << "Nhập khóa RailFence: ";
     std::cin >> numRails;
 
-    
+   
     std::string encryptedText = railFenceEncrypt1(plainText, numRails);
-    std::cout << "Bản mã sau khi mã hóa Rail Fence: " << encryptedText << std::endl;
 
+    
+    std::ofstream outputFile("Data/Rail_Fence_ciphertext.txt");
+    if (!outputFile) {
+        std::cerr << "Không thể mở file Rail_Fence_ciphertext.txt để ghi"<< '\n';
+        return 1;
+    }
+    outputFile << encryptedText;
+    outputFile.close();
+
+    std::cout << "Bản mã đã ghi thành công vào file: Rail_Fence_plaintext.txt" << std::endl;
 }
-if(choice==4){
-        auto programStart = std::chrono::high_resolution_clock::now();
+
+
+if (choice == 4) {
+    auto programStart = std::chrono::high_resolution_clock::now();
     std::string encryptedText;
-    std::cout << "Nhập bản mã Rail Fence: ";
-    std::cin.ignore();
-    std::getline(std::cin, encryptedText);
 
-    std::unordered_set<std::string> dictionary = loadDictionary2("Src/dictionary.txt");
+    std::string confirm;
+    cout<<"Hãy nhập bản mã vào file Rail_Fence_ciphertext.txt"<<'\n';
+    cout<<"Nhập OK để xác nhận: ";
+    cin>>confirm;
+    while(confirm!="OK"){
+  
+        cout<<"Vui lòng nhập OK để xác nhận: ";
+        cin>>confirm;
+   
+    }
+    
+    std::ifstream inputFile("Data/Rail_Fence_ciphertext.txt");
+    if (!inputFile) {
+        std::cerr << "Không thể mở file bản mã Rail_Fence_ciphertext.txt"<< '\n';
+        return 1;
+    }
 
+    std::getline(inputFile, encryptedText, '\0'); 
+    inputFile.close();
+
+    if (encryptedText.empty()) {
+        std::cout << "File bản mã rỗng. Không có gì để giải mã.\n";
+        return 1;
+    }
+    std::cout << "Bản mã đã đọc thành công từ file: Rail_Fence_ciphertext.txt: " << '\n';
+    
+    std::unordered_set<std::string> dictionary = loadDictionary2("Data/dictionary.txt");
+
+   
     int maxRails = encryptedText.length();
     int maxValidWords = 0;
     std::vector<std::pair<int, std::string>> bestDecryptedTexts;
-    
+
+   
     findBestDecryption(encryptedText, dictionary, 2, maxRails, maxValidWords, bestDecryptedTexts);
+
     
-    std::cout << "\nCác bản rõ có số từ hợp lệ cao nhất (" << maxValidWords << " từ hợp lệ):\n";
-    for (const auto& result : bestDecryptedTexts) {
-        std::cout << "Sử dụng " << result.first << " dòng: " << result.second << std::endl;
+    std::ofstream outputFile("Data/Rail_Fence_plaintext.txt");
+    if (!outputFile) {
+        std::cerr << "Không thể mở file Rail_Fence_plaintext.txt để ghi" << '\n';
+        return 1;
     }
+
+   
+    for (const auto& result : bestDecryptedTexts) {
+     
+        outputFile<<result.second<<'\n';
+      
+    }
+   
+
+    outputFile.close();
+    std::cout << "Bản rõ đã ghi thành công vào file: Rail_Fence_plaintext.txt" << std::endl;
+    cout<<"Khóa Rail Fence thu được: "<<bestDecryptedTexts[0].first<<'\n';
+    cout<<"Số từ hợp lệ trong bản rõ Rail Fence thu được: "<< maxValidWords<<'\n';
+   
 
     auto programEnd = std::chrono::high_resolution_clock::now();
     auto programDuration = std::chrono::duration_cast<std::chrono::milliseconds>(programEnd - programStart);
-
+    
     std::cout << "\nThời gian thực thi toàn bộ chương trình: " << programDuration.count() << " ms\n";
 }
-if(choice==5){
-        std::string plainText;
+
+
+if (choice == 5) {
+    std::string plainText;
     int caesarKey, railKey;
+    std::string confirm;
 
    
-    std::cout << "Nhập bản rõ: ";
-    std::cin.ignore();
-    std::getline(std::cin, plainText);
+    std::cout << "Hãy nhập bản rõ vào file Caesar_Rail_Fence_plaintext.txt" << '\n';
+    std::cout << "Nhập OK để xác nhận: ";
+    std::cin >> confirm;
+    while (confirm != "OK") {
+        std::cout << "Vui lòng nhập OK để xác nhận: ";
+        std::cin >> confirm;
+    }
 
-    std::cout << "Nhập khóa Caesar (số nguyên): ";
+   
+    std::ifstream inputFile("Data/Caesar_Rail_Fence_plaintext.txt");
+    if (!inputFile) {
+        std::cerr << "Không thể mở file Caesar_Rail_Fence_plaintext.txt để đọc bản rõ!\n";
+        return 1;
+    }
+    std::getline(inputFile, plainText);
+    inputFile.close();
+    if (plainText.empty()) {
+        std::cout << "File bản rõ rỗng. Không có gì để mã hóa.\n";
+        return 1;
+    }
+    std::cout << "Bản rõ đã đọc thành công từ file: Caesar_Rail_Fence_plaintext.txt\n";
+
+    
+    std::cout << "Nhập khóa Caesar: ";
     std::cin >> caesarKey;
-
-    std::cout << "Nhập số dòng Rail Fence: ";
+    std::cout << "Nhập khóa RailFence: ";
     std::cin >> railKey;
 
-    
-    std::string caesarEncrypted = caesarEncrypt(plainText, caesarKey);
-    std::cout << "Bản mã sau khi mã hóa Caesar: " << caesarEncrypted << std::endl;
-
    
+    std::string caesarEncrypted = caesarEncrypt(plainText, caesarKey);
+  
+
     std::string railFenceEncrypted = railFenceEncrypt(caesarEncrypted, railKey);
-    std::cout << "Bản mã cuối cùng sau khi mã hóa Rail Fence: " << railFenceEncrypted << std::endl;
+  
+    std::ofstream outputFile("Data/Caesar_Rail_Fence_ciphertext.txt");
+    if (!outputFile) {
+        std::cerr << "Không thể mở file Caesar_Rail_Fence_ciphertext.txt để ghi bản mã!\n";
+        return 1;
+    }
+  
+    outputFile <<  railFenceEncrypted << '\n';
+    outputFile.close();
+
+    std::cout << "Bản mã đã được ghi thành công vào file: Caesar_Rail_Fence_ciphertext.txt" << std::endl;
 }
-if(choice==6){
-             auto programStart = std::chrono::high_resolution_clock::now();
+
+
+if (choice == 6) {
+    auto programStart = std::chrono::high_resolution_clock::now();
     std::string encryptedText;
+    std::string confirm;
+
     
+    std::cout << "Hãy nhập bản mã vào file Caesar_Rail_Fence_ciphertext.txt" << '\n';
+    std::cout << "Nhập OK để xác nhận: ";
+    std::cin >> confirm;
+    while (confirm != "OK") {
+        std::cout << "Vui lòng nhập OK để xác nhận: ";
+        std::cin >> confirm;
+    }
+
     
-    std::cout << "Nhập bản mã: ";
-    std::cin.ignore();
-    std::getline(std::cin, encryptedText);
-    std::unordered_set<std::string> dictionary = loadDictionary("Src/dictionary.txt");
+    std::ifstream inputFile("Data/Caesar_Rail_Fence_ciphertext.txt");
+    if (!inputFile) {
+        std::cerr << "Không thể mở file Caesar_Rail_Fence_ciphertext.txt để đọc bản mã!\n";
+        return 1;
+    }
+    std::getline(inputFile, encryptedText);
+    inputFile.close();
+    if (encryptedText.empty()) {
+        std::cout << "File bản mã rỗng. Không có gì để giải mã.\n";
+        return 1;
+    }
+    std::cout << "Bản mã đã đọc thành công từ file: Caesar_Rail_Fence_ciphertext.txt\n";
+
+    
+    std::unordered_set<std::string> dictionary = loadDictionary("Data/dictionary.txt");
+
     
     std::string decryptedText = decryptProductCipher(encryptedText, dictionary);
 
+    
+    std::ofstream outputFile("Data/Caesar_Rail_Fence_plaintext.txt");
+    if (!outputFile) {
+        std::cerr << "Không thể mở file Caesar_Rail_Fence_plaintext.txt để ghi bản rõ!\n";
+        return 1;
+    }
+    outputFile <<  decryptedText << '\n';
    
-    std::cout << "Bản rõ sau khi giải mã: " << decryptedText << std::endl;
+    outputFile.close();
+
+    std::cout << "Bản rõ đã được ghi thành công vào file: Caesar_Rail_Fence_plaintext.txt" << std::endl;
+    cout << "Khóa Caesar thu được: " << bestShift << '\n';
+    cout << "Khóa Rail Fence thu được: " << bestRails << '\n';
+    cout << "Số từ hợp lệ trong bản rõ thu được: " << bestValidWords << '\n';
+   
     auto programEnd = std::chrono::high_resolution_clock::now();
     auto programDuration = std::chrono::duration_cast<std::chrono::milliseconds>(programEnd - programStart);
 
     std::cout << "\nThời gian thực thi toàn bộ chương trình: " << programDuration.count() << " ms\n";
-}
-    return 0;
+    }
+ return 0;
 }

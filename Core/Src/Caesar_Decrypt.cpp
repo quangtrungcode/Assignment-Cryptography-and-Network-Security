@@ -10,7 +10,7 @@
 #include <chrono>
 #include <omp.h>
 
-// Tải từ điển từ file
+
 std::unordered_set<std::string> loadDictionary1(const std::string& dictionaryFile) {
     std::unordered_set<std::string> dictionary;
     std::ifstream file(dictionaryFile);
@@ -83,9 +83,7 @@ void bruteForceCaesarDecrypt(const std::string& encryptedText, const std::unorde
         
         #pragma omp critical
         {
-            std::cout << "Khóa " << key << ": " << decryptedText << " -> Số từ hợp lệ: " << validWords << std::endl;
-
-            
+         
             if (validWords > globalMaxValidWords) {
                 globalMaxValidWords = validWords;
                 bestDecryptedTextGlobal = decryptedText;

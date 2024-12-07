@@ -10,4 +10,7 @@ void decryptAndUpdateBestResult(const std::string& encryptedText, const std::uno
                                 int numRails, int& bestValidWords, std::string& bestDecryptedText,
                                 int& bestShift, int& bestRails);
 std::string decryptProductCipher(const std::string& encryptedText, const std::unordered_set<std::string>& dictionary);
+extern int bestShift ;
+extern int bestRails ;
+extern int bestValidWords;
 #endif

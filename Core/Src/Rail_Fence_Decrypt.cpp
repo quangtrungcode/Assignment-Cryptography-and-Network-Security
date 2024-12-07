@@ -104,11 +104,6 @@ void findBestDecryption(const std::string& encryptedText, const std::unordered_s
         int validWords = findValidWords2(decryptedText, dictionary);
 
         
-        #pragma omp critical
-        {
-            std::cout << "Giải mã với " << numRails << " dòng: " << decryptedText 
-                      << " (Từ hợp lệ: " << validWords << ")" << std::endl;
-        }
 
        
         omp_set_lock(&lock);

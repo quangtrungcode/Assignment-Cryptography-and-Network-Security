@@ -131,20 +131,17 @@ void decryptAndUpdateBestResult(const std::string& encryptedText, const std::uno
     }
 }
 
-
+int bestShift = 0;
+int bestRails = 0;
+int bestValidWords = 0;
 std::string decryptProductCipher(const std::string& encryptedText, const std::unordered_set<std::string>& dictionary) {
-    int bestValidWords = 0;
+  
     std::string bestDecryptedText;
-    int bestShift = 0;
-    int bestRails = 0;
-
+  
     #pragma omp parallel for
     for (int numRails = 2; numRails <= encryptedText.length(); ++numRails) {
         decryptAndUpdateBestResult(encryptedText, dictionary, numRails, bestValidWords, bestDecryptedText, bestShift, bestRails);
     }
-    std::cout << "Khóa giải mã:\n";
-    std::cout << "Số đường ray (Rails): " << bestRails << std::endl;
-    std::cout << "Độ lệch Caesar (Shift): " << bestShift << std::endl;
     return bestDecryptedText;
 }
 
