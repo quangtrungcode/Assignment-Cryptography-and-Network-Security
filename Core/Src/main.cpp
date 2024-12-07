@@ -98,7 +98,7 @@ if (choice == 2) {
         std::cout << "File bản mã rỗng. Không có gì để giải mã.\n";
         return 1;
     }
-    std::cout << "Bản mã đã đọc thành công từ file: Caesar_ciphertext.txt: " << '\n';
+    std::cout << "Bản mã đã đọc thành công từ file: Caesar_ciphertext.txt " << '\n';
 
     
     std::unordered_set<std::string> dictionary = loadDictionary1("Data/dictionary.txt");
@@ -206,7 +206,7 @@ if (choice == 4) {
         std::cout << "File bản mã rỗng. Không có gì để giải mã.\n";
         return 1;
     }
-    std::cout << "Bản mã đã đọc thành công từ file: Rail_Fence_ciphertext.txt: " << '\n';
+    std::cout << "Bản mã đã đọc thành công từ file: Rail_Fence_ciphertext.txt " << '\n';
     
     std::unordered_set<std::string> dictionary = loadDictionary2("Data/dictionary.txt");
 
