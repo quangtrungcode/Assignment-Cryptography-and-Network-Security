@@ -51,7 +51,7 @@ int main() {
         std::cout << "File bản rõ rỗng. Không có gì để mã hóa.\n";
         return 1;
     }
-    std::cout << "Bản rõ đã đọc thành công từ file: Caesar_plaintext.txt: " << '\n';
+    std::cout << "Bản rõ đã đọc thành công từ file: Caesar_plaintext.txt" << '\n';
    
     std::cout << "Nhập khóa Caesar: ";
     std::cin >> key;
