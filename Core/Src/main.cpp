@@ -174,7 +174,7 @@ if (choice == 3) {
     outputFile << encryptedText;
     outputFile.close();
 
-    std::cout << "Bản mã đã ghi thành công vào file: Rail_Fence_plaintext.txt" << std::endl;
+    std::cout << "Bản mã đã ghi thành công vào file: Rail_Fence_ciphertext.txt" << std::endl;
 }
 
 
